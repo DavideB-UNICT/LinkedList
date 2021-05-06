@@ -1,0 +1,5 @@
+# IDE
+/.idea
+
+# C-Make
+cmake-build-*/
