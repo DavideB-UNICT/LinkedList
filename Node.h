@@ -9,21 +9,22 @@
 #include <string>
 using namespace std;
 
+template<typename T>
 class Node {
 private:
-    double value;
-    Node* next;
-    Node* prev;
+    T value;
+    Node<T>* next;
+    Node<T>* prev;
 public:
     Node();
-    Node(double value);
-    Node(double value, Node* prev, Node* next);
-    double getValue();
-    void setValue(double value);
-    Node* getNext();
-    void setNext(Node* node);
-    Node* getPrev();
-    void setPrev(Node* node);
+    Node(T value);
+    Node(T value, Node<T>* prev, Node<T>* next);
+    T getValue();
+    void setValue(T value);
+    Node<T>* getNext();
+    void setNext(Node<T>* node);
+    Node<T>* getPrev();
+    void setPrev(Node<T>* node);
     string toString();
     ostream& operator<<(ostream& stream);
 };

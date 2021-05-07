@@ -4,42 +4,53 @@
 
 #include "Node.h"
 
-Node::Node() {
-    this->setValue(0);
+template<typename T>
+Node<T>::Node() {
     this->setNext(nullptr);
     this->setPrev(nullptr);
 }
-Node::Node(double value) {
+template<typename T>
+Node<T>::Node(T value) {
     this->setValue(value);
     this->setNext(nullptr);
     this->setPrev(nullptr);
 }
-Node::Node(double value, Node* prev, Node* next) {
+template<typename T>
+Node<T>::Node(T value, Node<T>* prev, Node<T>* next) {
     this->setValue(value);
     this->setNext(next);
     this->setPrev(prev);
 }
-double Node::getValue() {
+template<typename T>
+T Node<T>::getValue() {
     return this->value;
 }
-void Node::setValue(double value) {
+template<typename T>
+void Node<T>::setValue(T value) {
     this->value = value;
 }
-Node* Node::getNext() {
+template<typename T>
+Node<T>* Node<T>::getNext() {
     return this->next;
 }
-void Node::setNext(Node* node) {
+template<typename T>
+void Node<T>::setNext(Node<T>* node) {
     this->next = node;
 }
-Node* Node::getPrev() {
+template<typename T>
+Node<T>* Node<T>::getPrev() {
     return this->prev;
 }
-void Node::setPrev(Node* node) {
+template<typename T>
+void Node<T>::setPrev(Node<T>* node) {
     this->prev = node;
 }
-string Node::toString() {
-
+template<typename T>
+string Node<T>::toString() {
+    cout << this->getValue() << endl;
 }
-ostream& Node::operator<<(ostream& stream) {
-
+template<typename T>
+ostream& Node<T>::operator<<(ostream& stream) {
+    stream << this->toString();
+    return stream;
 }
