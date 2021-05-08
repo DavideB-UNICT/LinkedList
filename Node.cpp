@@ -47,10 +47,10 @@ void Node<T>::setPrev(Node<T>* node) {
 }
 template<typename T>
 string Node<T>::toString() {
-    cout << this->getValue() << endl;
+    return this->getValue();
 }
 template<typename T>
 ostream& Node<T>::operator<<(ostream& stream) {
-    stream << this->toString();
+    stream << this->toString() << endl;
     return stream;
 }

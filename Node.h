@@ -17,7 +17,7 @@ private:
     Node<T>* prev;
 public:
     Node();
-    Node(T value);
+    explicit Node(T value);
     Node(T value, Node<T>* prev, Node<T>* next);
     T getValue();
     void setValue(T value);

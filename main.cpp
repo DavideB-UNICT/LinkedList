@@ -1,6 +1,8 @@
 #include <iostream>
+#include "LinkedList.h"
+using namespace std;
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    Node<int> node = Node<int>(10);
     return 0;
 }
