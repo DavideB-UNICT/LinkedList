@@ -101,9 +101,13 @@ public:
     int size() {
         int size = 0;
         Node<T>* pointer = this->getHead();
-        if (pointer == nullptr) return size;
-        while (pointer->getNext() != nullptr) {
-            pointer = pointer->getNext();
+        Node<T>* next = nullptr;
+        if (pointer != nullptr) {
+            next = pointer->getNext();
+            size++;
+        }
+        while (next != nullptr && next != pointer) {
+            next = next->getNext();
             size++;
         }
         return size;
