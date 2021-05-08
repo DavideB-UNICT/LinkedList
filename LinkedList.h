@@ -18,36 +18,17 @@ private:
         this->head = head;
     }
     Node<T>* getNode(int index) {
-        Node<T>* pointer = this->getHead();
-        try {
-            for (int i = 0; i < index; i++) {
-                Node<T>* next = pointer->getNext();
-                if (next != nullptr) {
-                    pointer = next;
-                    if (i == index) return pointer;
-                } else {
-                    throw out_of_range("Element out of range");
-                }
-            }
-        } catch (out_of_range& e) {
-            cerr << e.what() << endl;
+        int current = 0;
+        int headNum = 0;
+        Node<T>* currentHead = this->getHead();
+        Node<T>* pointer = currentHead;
+        while (current != index) {
+            pointer = pointer->getNext();
+            current++;
+            if (pointer == currentHead) headNum++;
         }
-    }
-    void setNode(int index, Node<T>* node) {
-        Node<T>* pointer = this->getHead();
-        try {
-            for (int i = 0; i < index; i++) {
-                auto next = pointer->getNext();
-                if (next != nullptr) {
-                    pointer = next;
-                    if (i == index) pointer = node;
-                } else {
-                    throw out_of_range("Element out of range");
-                }
-            }
-        } catch (out_of_range& e) {
-            cerr << e.what() << endl;
-        }
+        if (headNum > 0) return nullptr;
+        return pointer;
     }
 public:
     LinkedList() {
@@ -96,7 +77,6 @@ public:
         }
     }
     void remove(int index) {
-        Node<T>* node = this->getNode(index);
     }
     int size() {
         int size = 0;

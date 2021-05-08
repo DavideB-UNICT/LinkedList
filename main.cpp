@@ -9,5 +9,6 @@ int main() {
     list.push_back(1);
     list.push_back(2);
     cout << list.size() << endl;
+    cout << list[1] << endl;
     return 0;
 }
