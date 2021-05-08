@@ -34,16 +34,18 @@ public:
     LinkedList() {
         this->setHead(nullptr);
     }
-    T at(int index) {
+    T* at(int index) {
         Node<T>* node = this->getNode(index);
-        return node->getValue();
+        if (node == nullptr) return nullptr;
+        return new T(node->getValue());
     }
     void at(int index, T value) {
         Node<T>* node = this->getNode(index);
-        auto* next = new Node<T>(value);
-        node->setNext(next);
-        next->setPrev(node);
-        next->setNext(node->getNext());
+        if (node != nullptr) {
+            node->setValue(value);
+        } else {
+            cerr << "Value not modified. Index not in range" << endl;
+        }
     }
     bool empty() {
         return this->getHead() == nullptr;
@@ -77,6 +79,16 @@ public:
         }
     }
     void remove(int index) {
+        Node<T>* node = this->getNode(index);
+        if (node != nullptr) {
+            Node<T>* prev = node->getPrev();
+            Node<T>* next = node->getNext();
+            prev->setNext(next);
+            next->setPrev(prev);
+            delete node;
+        } else {
+            cerr << "Element not deleted. Index not in range" << endl;
+        }
     }
     int size() {
         int size = 0;
@@ -92,7 +104,7 @@ public:
         }
         return size;
     }
-    T operator[](int index) {
+    T* operator[](int index) {
         return this->at(index);
     }
 };
