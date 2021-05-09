@@ -56,6 +56,7 @@ public:
             auto last = pointer->getPrev();
             if (last == pointer) {
                 delete this->getHead();
+                this->setHead(nullptr);
             } else {
                 auto prePrev = last->getPrev();
                 prePrev->setNext(pointer);
@@ -72,6 +73,7 @@ public:
             node->setNext(pointer);
             node->setPrev(last);
             last->setNext(node);
+            pointer->setPrev(node);
         } else {
             node->setNext(node);
             node->setPrev(node);
