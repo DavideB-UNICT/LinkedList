@@ -16,17 +16,45 @@ private:
     Node<T>* next;
     Node<T>* prev;
 public:
-    Node();
-    Node(T value);
-    Node(T value, Node<T>* prev, Node<T>* next);
-    T getValue();
-    void setValue(T value);
-    Node<T>* getNext();
-    void setNext(Node<T>* node);
-    Node<T>* getPrev();
-    void setPrev(Node<T>* node);
-    string toString();
-    ostream& operator<<(ostream& stream);
+    Node() {
+        this->setNext(nullptr);
+        this->setPrev(nullptr);
+    }
+    explicit Node(T value) {
+        this->setValue(value);
+        this->setNext(nullptr);
+        this->setPrev(nullptr);
+    }
+    Node(T value, Node<T>* prev, Node<T>* next) {
+        this->setValue(value);
+        this->setNext(next);
+        this->setPrev(prev);
+    }
+    T getValue() {
+        return this->value;
+    }
+    void setValue(T value) {
+        this->value = value;
+    }
+    Node<T>* getNext() {
+        return this->next;
+    }
+    void setNext(Node<T>* node) {
+        this->next = node;
+    }
+    Node<T>* getPrev() {
+        return this->prev;
+    }
+    void setPrev(Node<T>* node) {
+        this->prev = node;
+    }
+    string toString() {
+        return this->getValue();
+    }
+    ostream& operator<<(ostream& stream) {
+        stream << this->toString() << endl;
+        return stream;
+    }
 };
 
 
