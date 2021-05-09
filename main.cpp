@@ -15,5 +15,9 @@ int main() {
     list.remove(1);
     list.pop_back();
     cout << list.size() << endl;
+    list.insert(0, 6);
+    cout << list.size() << endl;
+    list.insert(0, 5);
+    cout << list.size() << endl;
     return 0;
 }

@@ -50,6 +50,26 @@ public:
     bool empty() {
         return this->getHead() == nullptr;
     }
+    void insert(int index, T value) {
+        Node<T>* currentHead = this->getHead();
+        Node<T>* node = this->getNode(index);
+        if (node != nullptr) {
+            Node<T>* next = node->getNext();
+            Node<T>* insert = new Node<T>(value, node, next);
+            node->setNext(insert);
+            next->setPrev(insert);
+            if (index == 0) {
+                this->setHead(insert);
+            }
+        } else if (currentHead == nullptr && index == 0) {
+            Node<T>* newHead = new Node<T>(value);
+            newHead->setNext(newHead);
+            newHead->setPrev(newHead);
+            this->setHead(newHead);
+        } else {
+            cerr << "Element not inserted. Index not in range" << endl;
+        }
+    }
     void pop_back() {
         Node<T>* pointer = this->getHead();
         if (pointer != nullptr) {
