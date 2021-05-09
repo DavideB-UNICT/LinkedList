@@ -110,10 +110,10 @@ public:
             Node<T>* next = node->getNext();
             prev->setNext(next);
             next->setPrev(prev);
-            delete node;
             if (node == currentHead) {
                 this->setHead(next);
             }
+            delete node;
         } else {
             cerr << "Element not deleted. Index not in range" << endl;
         }
