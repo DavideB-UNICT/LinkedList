@@ -20,5 +20,7 @@ int main() {
     list.insert(0, 5);
     cout << list.size() << endl;
     cout << list << endl;
+    list.clear();
+    cout << list.size() << endl;
     return 0;
 }

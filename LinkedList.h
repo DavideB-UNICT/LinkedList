@@ -49,6 +49,16 @@ public:
             cerr << "Value not modified. Index not in range" << endl;
         }
     }
+    void clear() {
+        Node<T>* pointer = this->getHead();
+        int currentSize = this->size();
+        for (int i = 0; i < currentSize; i++) {
+            Node<T>* temp = pointer;
+            pointer = pointer->getNext();
+            delete temp;
+        }
+        this->setHead(nullptr);
+    }
     bool empty() {
         return this->getHead() == nullptr;
     }
