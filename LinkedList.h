@@ -5,19 +5,21 @@
 #ifndef LINKEDLIST_LINKEDLIST_H
 #define LINKEDLIST_LINKEDLIST_H
 
+#include <iostream>
 #include "Node.h"
+using namespace std;
 
 template<typename T>
 class LinkedList {
 private:
     Node<T>* head;
-    Node<T>* getHead() {
+    Node<T>* getHead() const {
         return this->head;
     }
     void setHead(Node<T>* head) {
         this->head = head;
     }
-    Node<T>* getNode(int index) {
+    Node<T>* getNode(int index) const {
         int current = 0;
         int headNum = 0;
         Node<T>* currentHead = this->getHead();
@@ -34,7 +36,7 @@ public:
     LinkedList() {
         this->setHead(nullptr);
     }
-    T* at(int index) {
+    T* at(int index) const {
         Node<T>* node = this->getNode(index);
         if (node == nullptr) return nullptr;
         return new T(node->getValue());
@@ -116,7 +118,7 @@ public:
             cerr << "Element not deleted. Index not in range" << endl;
         }
     }
-    int size() {
+    int size() const {
         int size = 0;
         Node<T>* pointer = this->getHead();
         Node<T>* next = nullptr;
@@ -130,8 +132,25 @@ public:
         }
         return size;
     }
+    string toString() const {
+        int currentSize = this->size();
+        string s = "Linked list: \nSize: " + to_string(currentSize) + "\nData: \n";
+        if (!currentSize) {
+            s += "Empty list";
+        }
+        else {
+            for (int i = 0; i < currentSize; i++) {
+                s += to_string(i + 1) + ") " + to_string(*this->at(i)) + "\n";
+            }
+        }
+        return s;
+    }
     T* operator[](int index) {
         return this->at(index);
+    }
+    friend ostream& operator<<(ostream& stream, const LinkedList<T> list) {
+        stream << list.toString();
+        return stream;
     }
 };
 

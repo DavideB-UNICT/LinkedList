@@ -19,5 +19,6 @@ int main() {
     cout << list.size() << endl;
     list.insert(0, 5);
     cout << list.size() << endl;
+    cout << list << endl;
     return 0;
 }
