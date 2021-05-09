@@ -81,6 +81,7 @@ public:
         }
     }
     void remove(int index) {
+        Node<T>* currentHead = this->getHead();
         Node<T>* node = this->getNode(index);
         if (node != nullptr) {
             Node<T>* prev = node->getPrev();
@@ -88,6 +89,9 @@ public:
             prev->setNext(next);
             next->setPrev(prev);
             delete node;
+            if (node == currentHead) {
+                this->setHead(next);
+            }
         } else {
             cerr << "Element not deleted. Index not in range" << endl;
         }

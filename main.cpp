@@ -12,8 +12,7 @@ int main() {
     cout << *list[1] << endl;
     list.at(1, 3);
     cout << *list[1] << "  " << list.size() << endl;
-    list.pop_back();
-    list.pop_back();
+    list.remove(1);
     cout << list.size() << endl;
     return 0;
 }
