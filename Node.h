@@ -30,7 +30,7 @@ public:
         this->setNext(next);
         this->setPrev(prev);
     }
-    T getValue() {
+    T getValue() const {
         return this->value;
     }
     void setValue(T value) {
@@ -48,11 +48,11 @@ public:
     void setPrev(Node<T>* node) {
         this->prev = node;
     }
-    string toString() {
-        return this->getValue();
+    string toString() const {
+        return to_string(this->getValue());
     }
-    ostream& operator<<(ostream& stream) {
-        stream << this->toString() << endl;
+    friend ostream& operator<<(ostream& stream, const Node<T> node) {
+        stream << node.toString() << endl;
         return stream;
     }
 };
