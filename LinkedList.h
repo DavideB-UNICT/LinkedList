@@ -33,6 +33,26 @@ private:
         return pointer;
     }
 public:
+    class Iterator {
+    private:
+        int i_index;
+        const LinkedList<T> *list;
+    public:
+        Iterator(const LinkedList<T> *vector, int nIndex) {
+            this->list = vector;
+            this->i_index = nIndex;
+        }
+        const T &operator*() const {
+            return this->list[this->i_index];
+        }
+        Iterator &operator++() {
+            this->i_index++;
+            return *this;
+        }
+        bool operator!=(const Iterator &other) const {
+            return this->i_index != other.i_index;
+        }
+    };
     LinkedList() {
         this->setHead(nullptr);
     }
@@ -49,6 +69,9 @@ public:
             cerr << "Value not modified. Index not in range" << endl;
         }
     }
+    Node<T>* begin() {
+        return this->getHead();
+    }
     void clear() {
         Node<T>* pointer = this->getHead();
         int currentSize = this->size();
@@ -61,6 +84,9 @@ public:
     }
     bool empty() {
         return this->getHead() == nullptr;
+    }
+    Node<T>* end() {
+        return this->getHead()->getPrev();
     }
     void insert(int index, T value) {
         Node<T>* currentHead = this->getHead();
