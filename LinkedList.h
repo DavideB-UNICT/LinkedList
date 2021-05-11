@@ -20,17 +20,12 @@ private:
         this->head = head;
     }
     Node<T>* getNode(int index) const {
-        int current = 0;
-        int headNum = 0;
-        Node<T>* currentHead = this->getHead();
-        Node<T>* pointer = currentHead;
-        while (current != index) {
-            pointer = pointer->getNext();
-            current++;
-            if (pointer == currentHead) headNum++;
+        int i = 0;
+        for (Node<T>* node = this->begin(); node != this->end(); node = node->getNext()) {
+            if (i == index) return node;
+            i++;
         }
-        if (headNum > 0) return nullptr;
-        return pointer;
+        return nullptr;
     }
 public:
     class Iterator {
@@ -54,101 +49,81 @@ public:
         }
     };
     LinkedList() {
-        this->setHead(nullptr);
+        auto newHead = new Node<T>();
+        newHead->setNext(newHead);
+        newHead->setPrev(newHead);
+        this->setHead(newHead);
     }
     T* at(int index) const {
-        Node<T>* node = this->getNode(index);
+        auto node = this->getNode(index);
         if (node == nullptr) return nullptr;
         return new T(node->getValue());
     }
     void at(int index, T value) {
-        Node<T>* node = this->getNode(index);
+        auto node = this->getNode(index);
         if (node != nullptr) {
             node->setValue(value);
         } else {
             cerr << "Value not modified. Index not in range" << endl;
         }
     }
-    Node<T>* begin() {
+    Node<T>* begin() const {
         return this->getHead();
     }
     void clear() {
-        Node<T>* pointer = this->getHead();
-        int currentSize = this->size();
-        for (int i = 0; i < currentSize; i++) {
-            Node<T>* temp = pointer;
-            pointer = pointer->getNext();
+        auto node = this->begin();
+        auto end = this->end();
+        while (node != end) {
+            auto temp = node;
+            node = node->getNext();
             delete temp;
         }
-        this->setHead(nullptr);
     }
-    bool empty() {
-        return this->getHead() == nullptr;
+    bool empty() const {
+        return this->size() == 0;
     }
-    Node<T>* end() {
+    Node<T>* end() const {
         return this->getHead()->getPrev();
     }
     void insert(int index, T value) {
-        Node<T>* currentHead = this->getHead();
-        Node<T>* node = this->getNode(index);
-        if (node != nullptr) {
-            Node<T>* next = node->getNext();
-            Node<T>* insert = new Node<T>(value, node, next);
-            node->setNext(insert);
-            next->setPrev(insert);
-            if (index == 0) {
-                this->setHead(insert);
-            }
-        } else if (currentHead == nullptr && index == 0) {
-            Node<T>* newHead = new Node<T>(value);
-            newHead->setNext(newHead);
-            newHead->setPrev(newHead);
-            this->setHead(newHead);
+        if (index < this->size()) {
+            auto node = this->getNode(index);
+            auto next = node->getNext();
+            auto newNode = new Node<T>(value, node, next);
+            node->setNext(newNode);
+            next->setPrev(newNode);
+        } else if (index == this->size()) {
+            this->push_back(value);
         } else {
             cerr << "Element not inserted. Index not in range" << endl;
         }
     }
     void pop_back() {
-        Node<T>* pointer = this->getHead();
-        if (pointer != nullptr) {
-            auto last = pointer->getPrev();
-            if (last == pointer) {
-                delete this->getHead();
-                this->setHead(nullptr);
-            } else {
-                auto prePrev = last->getPrev();
-                prePrev->setNext(pointer);
-                pointer->setPrev(prePrev);
-                delete last;
-            }
+        if (!this->empty()) {
+            auto lastNode = this->end();
+            auto prev = lastNode->getPrev();
+            auto next = lastNode->getNext();
+            prev->setNext(next);
+            next->setPrev(prev);
+            delete lastNode;
+        } else {
+            cerr << "Nothing to remove. Empty list" << endl;
         }
     }
     void push_back(T value) {
-        Node<T>* pointer = this->getHead();
-        auto node = new Node<T>(value);
-        if (pointer != nullptr) {
-            auto last = pointer->getPrev();
-            node->setNext(pointer);
-            node->setPrev(last);
-            last->setNext(node);
-            pointer->setPrev(node);
-        } else {
-            node->setNext(node);
-            node->setPrev(node);
-            this->setHead(node);
-        }
+        auto lastNode = this->end();
+        auto next = lastNode->getNext();
+        auto newNode = new Node<T>(value, lastNode, next);
+        lastNode->setNext(newNode);
+        next->setPrev(newNode);
     }
     void remove(int index) {
-        Node<T>* currentHead = this->getHead();
-        Node<T>* node = this->getNode(index);
+        auto node = this->getNode(index);
         if (node != nullptr) {
-            Node<T>* prev = node->getPrev();
-            Node<T>* next = node->getNext();
+            auto prev = node->getPrev();
+            auto next = node->getNext();
             prev->setNext(next);
             next->setPrev(prev);
-            if (node == currentHead) {
-                this->setHead(next);
-            }
             delete node;
         } else {
             cerr << "Element not deleted. Index not in range" << endl;
@@ -156,16 +131,7 @@ public:
     }
     int size() const {
         int size = 0;
-        Node<T>* pointer = this->getHead();
-        Node<T>* next = nullptr;
-        if (pointer != nullptr) {
-            next = pointer->getNext();
-            size++;
-        }
-        while (next != nullptr && next != pointer) {
-            next = next->getNext();
-            size++;
-        }
+        for (Node<T>* node = this->begin(); node != this->end(); node = node->getNext()) size++;
         return size;
     }
     string toString() const {
