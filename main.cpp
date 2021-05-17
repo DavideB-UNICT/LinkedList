@@ -20,10 +20,7 @@ int main() {
     list.insert(0, 5);
     cout << list.size() << endl;
     cout << list << endl;
-    for (auto el : list) {
-        cout << el << endl;
-    }
     list.clear();
-    cout << list.size() << endl;
+    cout << "Size: " << list.size() << endl;
     return 0;
 }
