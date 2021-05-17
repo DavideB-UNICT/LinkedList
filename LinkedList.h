@@ -36,6 +36,21 @@ public:
     LinkedList() {
         this->setHead(nullptr);
     }
+    ~LinkedList() {
+        Node<T>* currentHead = this->getHead();
+        if (currentHead != nullptr) {
+            Node<T> *next = this->getHead()->getNext();
+            while (next != nullptr && next != currentHead) {
+                cerr << "Clening" << endl;
+                Node<T> *temp = next;
+                next = next->getNext();
+                delete temp;
+            }
+            delete currentHead;
+        } else {
+            cerr << "Nothing to clean" << endl;
+        }
+    }
     T* at(int index) const {
         Node<T>* node = this->getNode(index);
         if (node == nullptr) return nullptr;
@@ -53,14 +68,17 @@ public:
         return this->getHead();
     }
     void clear() {
-        Node<T>* pointer = this->getHead();
-        int currentSize = this->size();
-        for (int i = 0; i < currentSize; i++) {
-            Node<T>* temp = pointer;
-            pointer = pointer->getNext();
-            delete temp;
+        Node<T>* currentHead = this->getHead();
+        if (currentHead != nullptr) {
+            Node<T> *next = this->getHead()->getNext();
+            while (next != nullptr && next != currentHead) {
+                Node<T> *temp = next;
+                next = next->getNext();
+                delete temp;
+            }
+            delete currentHead;
+            this->setHead(nullptr);
         }
-        this->setHead(nullptr);
     }
     bool empty() {
         return this->getHead() == nullptr;
